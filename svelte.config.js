@@ -1,13 +1,11 @@
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-import adapter from 'amplify-adapter';
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
+import adapter from "amplify-adapter";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	preprocess: vitePreprocess(),
-
 	kit: {
-		adapter: adapter()
-	}
+		adapter: adapter(),
+	},
+	preprocess: vitePreprocess(),
 };
-
 export default config;
