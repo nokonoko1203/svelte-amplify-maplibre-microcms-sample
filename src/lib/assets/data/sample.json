@@ -4,30 +4,30 @@
 		{
 			"type": "Feature",
 			"properties": {
-				"url": "https://example.com"
+				"contentId": "j7dhxdgtfk"
 			},
 			"geometry": {
-				"coordinates": [139.70524354520967, 35.70446488045131],
+				"coordinates": [136.90538087518667, 35.1815214332498],
 				"type": "Point"
 			}
 		},
 		{
 			"type": "Feature",
 			"properties": {
-				"url": "https://example.com"
+				"contentId": "y1gbbfcum9s"
 			},
 			"geometry": {
-				"coordinates": [136.76552557943018, 35.414378067778756],
+				"coordinates": [139.76626680582535, 35.681460699146825],
 				"type": "Point"
 			}
 		},
 		{
 			"type": "Feature",
 			"properties": {
-				"url": "https://example.com"
+				"contentId": "4w7zq0n7apg"
 			},
 			"geometry": {
-				"coordinates": [140.03790892195423, 36.974335411841835],
+				"coordinates": [141.35069555833195, 43.06870048875908],
 				"type": "Point"
 			}
 		}

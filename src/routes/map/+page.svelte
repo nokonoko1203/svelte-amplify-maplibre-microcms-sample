@@ -5,7 +5,6 @@
 	import { GeoJSONSource, MapLibre, SymbolLayer } from "svelte-maplibre-gl";
 
 	let map: maplibregl.Map | undefined = $state.raw();
-	let markerLnglat = $state({ lng: 139.767052, lat: 35.681167 });
 
 	onMount(() => {
 		map?.on("load", () => {
@@ -15,13 +14,41 @@
 		});
 	});
 
-	const handlePopup = (e: maplibregl.MapMouseEvent) => {
-		new maplibregl.Popup()
-			.setLngLat(e.lngLat)
-			.setHTML(
-				`<p class="text-xl">${e.lngLat.lat.toFixed(3)}, ${e.lngLat.lng.toFixed(3)}</p>`,
-			)
-			.addTo(map!);
+	const fetchPostData = async (id: string) => {
+		try {
+			const res = await fetch(`/api/posts/${id}`);
+			if (!res.ok) throw new Error("Failed to fetch post data");
+			return await res.json();
+		} catch (error) {
+			console.error(error);
+			return null;
+		}
+	};
+
+	const handlePopup = async (e: maplibregl.MapLayerMouseEvent) => {
+		const id = e.features?.[0]?.properties.contentId;
+		if (!id) return;
+
+		const post = await fetchPostData(id);
+
+		if (post) {
+			new maplibregl.Popup()
+				.setLngLat(e.lngLat)
+				.setHTML(
+					`
+					<div>
+						<h2 class="text-xl">${post.title}</h2>
+						<img src="${post.eyecatch.url}" alt="${post.title}" class="w-full h-auto" />
+					</div>
+				`,
+				)
+				.addTo(map!);
+		} else {
+			new maplibregl.Popup()
+				.setLngLat(e.lngLat)
+				.setHTML("<p>データの取得に失敗しました。</p>")
+				.addTo(map!);
+		}
 	};
 </script>
 
@@ -36,7 +63,9 @@
 	>
 		<GeoJSONSource id="sample-source" data="src/lib/assets/data/sample.json">
 			<SymbolLayer
-				onclick={(e) => handlePopup(e)}
+				onclick={(e) => {
+					handlePopup(e);
+				}}
 				id="sample-layer"
 				layout={{
 					"icon-image": "icon",
