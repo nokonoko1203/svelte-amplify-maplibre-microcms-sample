@@ -3,7 +3,9 @@
 	"features": [
 		{
 			"type": "Feature",
-			"properties": {},
+			"properties": {
+				"url": "https://example.com"
+			},
 			"geometry": {
 				"coordinates": [139.70524354520967, 35.70446488045131],
 				"type": "Point"
@@ -11,7 +13,9 @@
 		},
 		{
 			"type": "Feature",
-			"properties": {},
+			"properties": {
+				"url": "https://example.com"
+			},
 			"geometry": {
 				"coordinates": [136.76552557943018, 35.414378067778756],
 				"type": "Point"
@@ -19,7 +23,9 @@
 		},
 		{
 			"type": "Feature",
-			"properties": {},
+			"properties": {
+				"url": "https://example.com"
+			},
 			"geometry": {
 				"coordinates": [140.03790892195423, 36.974335411841835],
 				"type": "Point"

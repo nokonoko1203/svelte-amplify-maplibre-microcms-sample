@@ -1,24 +1,35 @@
 <script lang="ts">
-	import { sampleData } from "$lib/assets/data/sample.json";
-	import { CircleLayer, GeoJSONSource, MapLibre } from "svelte-maplibre-gl";
+	import icon from "$lib/assets/data/icon.png";
+	import maplibregl from "maplibre-gl";
+	import { onMount } from "svelte";
+	import { GeoJSONSource, MapLibre, SymbolLayer } from "svelte-maplibre-gl";
+
+	let map: maplibregl.Map | undefined = $state.raw();
+
+	onMount(() => {
+		map?.on("load", () => {
+			const image = new Image();
+			image.src = icon;
+			image.onload = () => map?.addImage("icon", image);
+		});
+	});
 </script>
 
-<!-- 文字の色を変える -->
-<h1 class="text-4xl text-red-600">Map</h1>
+<h1 class="text-4xl text-red-600">日記やで</h1>
 <div class="h-full w-screen">
 	<MapLibre
+		bind:map
 		class="h-[60vh] min-h-[300px]"
 		style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
 		zoom={5}
 		center={{ lng: 137, lat: 36 }}
 	>
-		<GeoJSONSource id="sample-source" data={sampleData}>
-			<CircleLayer
-				paint={{
-					"circle-radius": 8,
-					"circle-color": "#ff0000",
-					"circle-stroke-width": 1,
-					"circle-stroke-color": "#ffffff",
+		<GeoJSONSource id="sample-source" data="src/lib/assets/data/sample.json">
+			<SymbolLayer
+				id="sample-layer"
+				layout={{
+					"icon-image": "icon",
+					"icon-size": 0.5,
 				}}
 			/>
 		</GeoJSONSource>
