@@ -1,14 +1,14 @@
 import { createClient, type MicroCMSQueries } from "microcms-js-sdk";
 
-import { MICROCMS_API_KEY, SERVICE_DOMAIN } from "$env/static/private";
+import { env } from "$env/dynamic/private";
 import type { Post } from "./types";
 
 let client: ReturnType<typeof createClient> | undefined = undefined;
 const getClient = () => {
 	if (client) return client;
 	client = createClient({
-		serviceDomain: SERVICE_DOMAIN ?? "",
-		apiKey: MICROCMS_API_KEY ?? "",
+		serviceDomain: env.SERVICE_DOMAIN ?? "",
+		apiKey: env.MICROCMS_API_KEY ?? "",
 	});
 	return client;
 };
