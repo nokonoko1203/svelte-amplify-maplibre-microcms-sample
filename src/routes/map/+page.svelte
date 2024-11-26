@@ -1,10 +1,13 @@
 <script lang="ts">
 	import icon from "$lib/assets/data/icon.png";
+	import geoJson from "$lib/assets/data/sample.json";
+
 	import maplibregl from "maplibre-gl";
 	import { onMount } from "svelte";
 	import { GeoJSONSource, MapLibre, SymbolLayer } from "svelte-maplibre-gl";
 
 	let map: maplibregl.Map | undefined = $state.raw();
+	let geojson = geoJson as GeoJSON.FeatureCollection<GeoJSON.Geometry>;
 
 	onMount(() => {
 		map?.on("load", () => {
@@ -60,7 +63,7 @@
 		zoom={5}
 		center={{ lng: 137.5, lat: 38.5 }}
 	>
-		<GeoJSONSource id="sample-source" data="src/lib/assets/data/sample.json">
+		<GeoJSONSource id="sample-source" data={geojson}>
 			<SymbolLayer
 				onclick={(e) => {
 					handlePopup(e);
