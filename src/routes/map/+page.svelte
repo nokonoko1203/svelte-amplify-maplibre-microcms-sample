@@ -5,6 +5,7 @@
 	import { GeoJSONSource, MapLibre, SymbolLayer } from "svelte-maplibre-gl";
 
 	let map: maplibregl.Map | undefined = $state.raw();
+	let markerLnglat = $state({ lng: 139.767052, lat: 35.681167 });
 
 	onMount(() => {
 		map?.on("load", () => {
@@ -13,6 +14,15 @@
 			image.onload = () => map?.addImage("icon", image);
 		});
 	});
+
+	const handlePopup = (e: maplibregl.MapMouseEvent) => {
+		new maplibregl.Popup()
+			.setLngLat(e.lngLat)
+			.setHTML(
+				`<p class="text-xl">${e.lngLat.lat.toFixed(3)}, ${e.lngLat.lng.toFixed(3)}</p>`,
+			)
+			.addTo(map!);
+	};
 </script>
 
 <h1 class="text-4xl text-red-600">日記やで</h1>
@@ -26,12 +36,13 @@
 	>
 		<GeoJSONSource id="sample-source" data="src/lib/assets/data/sample.json">
 			<SymbolLayer
+				onclick={(e) => handlePopup(e)}
 				id="sample-layer"
 				layout={{
 					"icon-image": "icon",
-					"icon-size": 0.5,
+					"icon-size": 0.75,
 				}}
-			/>
+			></SymbolLayer>
 		</GeoJSONSource>
 	</MapLibre>
 </div>
