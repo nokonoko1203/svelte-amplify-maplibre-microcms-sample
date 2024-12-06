@@ -5,6 +5,8 @@ import type { Post } from "./types";
 
 let client: ReturnType<typeof createClient> | undefined = undefined;
 const getClient = () => {
+	console.log("env.SERVICE_DOMAIN", env.SERVICE_DOMAIN);
+	console.log("env.MICROCMS_API_KEY", env.MICROCMS_API_KEY);
 	if (client) return client;
 	client = createClient({
 		serviceDomain: env.SERVICE_DOMAIN ?? "",
