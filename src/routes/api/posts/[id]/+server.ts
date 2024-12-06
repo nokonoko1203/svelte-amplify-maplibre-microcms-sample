@@ -1,4 +1,4 @@
-import { getPostDetail } from "$lib/cms/client";
+import { getPostDetail } from "$lib/cms/cms-client.server";
 import { error, json } from "@sveltejs/kit";
 
 export const GET = async ({ params }) => {
