@@ -8,11 +8,18 @@ export const GET = async ({ params }) => {
 		throw error(400, "ID is required");
 	}
 
-	const post = await getPostDetail(id);
+	try {
+		const post = await getPostDetail(id);
 
-	if (!post) {
-		throw error(404, "Post not found");
+		if (!post) {
+			throw error(404, "Post not found");
+		}
+
+		return json(post);
+	} catch (e) {
+		throw error(
+			500,
+			e instanceof Error ? e.message : "An unknown error occurred",
+		);
 	}
-
-	return json(post);
 };
