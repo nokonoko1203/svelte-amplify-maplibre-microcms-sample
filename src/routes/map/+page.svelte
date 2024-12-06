@@ -3,19 +3,15 @@
 	import geoJson from "$lib/assets/data/sample.json";
 
 	import maplibregl from "maplibre-gl";
-	import { onMount } from "svelte";
-	import { GeoJSONSource, MapLibre, SymbolLayer } from "svelte-maplibre-gl";
+	import {
+		GeoJSONSource,
+		ImageLoader,
+		MapLibre,
+		SymbolLayer,
+	} from "svelte-maplibre-gl";
 
 	let map: maplibregl.Map | undefined = $state.raw();
 	let geojson = geoJson as GeoJSON.FeatureCollection<GeoJSON.Geometry>;
-
-	onMount(() => {
-		map?.on("load", () => {
-			const image = new Image();
-			image.src = icon;
-			image.onload = () => map?.addImage("icon", image);
-		});
-	});
 
 	const fetchPostData = async (id: string) => {
 		try {
@@ -64,16 +60,22 @@
 		center={{ lng: 137.5, lat: 38.5 }}
 	>
 		<GeoJSONSource id="sample-source" data={geojson}>
-			<SymbolLayer
-				onclick={(e) => {
-					handlePopup(e);
+			<ImageLoader
+				images={{
+					icon: icon,
 				}}
-				id="sample-layer"
-				layout={{
-					"icon-image": "icon",
-					"icon-size": 0.75,
-				}}
-			></SymbolLayer>
+			>
+				<SymbolLayer
+					onclick={(e) => {
+						handlePopup(e);
+					}}
+					id="sample-layer"
+					layout={{
+						"icon-image": "icon",
+						"icon-size": 0.75,
+					}}
+				></SymbolLayer>
+			</ImageLoader>
 		</GeoJSONSource>
 	</MapLibre>
 </div>
